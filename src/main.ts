@@ -11,10 +11,21 @@ button.innerHTML = "😼";
 let counter: number = 0;
 const newDiv = document.createElement("div");
 button.addEventListener("click", () => {
-    counter += 1
-    newDiv.innerHTML = `${counter} smirks 😼`
+  counter += 1;
+  newDiv.innerHTML = `${counter} smirks 😼`;
 });
-newDiv.innerHTML = `${counter} smirks 😼`
+newDiv.innerHTML = `${counter} smirks 😼`;
+
+let nIntervID;
+
+if (!nIntervID) {
+    nIntervID = setInterval(myCallback, 1000);
+}
+
+function myCallback() {
+    counter += 1
+    newDiv.innerHTML = `${counter} smirks 😼`;
+}
 
 
 const header = document.createElement("h1");
