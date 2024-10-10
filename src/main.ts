@@ -10,48 +10,90 @@ button.innerHTML = "😼";
 
 let counter: number = 0; // Lines 11-16 increment counter each button click
 const newDiv = document.createElement("div");
-const newDiv2 = document.createElement("div")
+const newDiv2 = document.createElement("div");
+const newDiv3 = document.createElement("div");
+const newDiv4 = document.createElement("div");
+const gr = document.createElement("div");
 button.addEventListener("click", () => {
-    shopButton.disabled = counter < 9
-    counter += 1;
-    newDiv.innerHTML = `${Math.round(counter)} smirks 😼`;
+  shopButton1.disabled = Math.round(counter) < 9;
+  counter += 1;
+  newDiv.innerHTML = `${Math.round(counter)} smirks 😼`;
 });
 
 newDiv.innerHTML = `${counter} smirks 😼`; //Initialize first buttion
 
-let previousTime: number = 0 // Initialize the time at the start
+let previousTime: number = 0; // Initialize the time at the start
 
 function updateCount() {
   const currentTime = performance.now(); // Time after program
   const increment = (currentTime - previousTime) / 1000; // diff in time
-  counter += increment * upgrades; // increase counter divide by 1k to get seconds
+  counter += (increment * upgrades1 * 0.1) + (increment * upgrades2 * 2) + (increment * upgrades3 * 50); // increase counter divide by 1k to get seconds
+  gr.innerHTML = `Growth Rate: ${(Math.round(upgrades1 * 0.1* 10) / 10) + (upgrades2 * 2) + (upgrades3 * 50)}`;
   newDiv.innerHTML = `${Math.round(counter)} smirks 😼`; // increment counter
   previousTime = currentTime; // for next frame so u can get difference between 2 frames
-  shopButton.disabled = counter < 10
+  shopButton1.disabled = Math.round(counter) < 10;
+  shopButton2.disabled = Math.round(counter) < 100;
+  shopButton3.disabled = Math.round(counter) < 1000;
   requestAnimationFrame(updateCount);
 }
 
-let upgrades: number = 0;
+let upgrades1: number = 0;
+let upgrades2: number = 0;
+let upgrades3: number = 0;
 
-const shopButton = document.createElement("button");
-shopButton.innerHTML = "Upgrades 😼" 
-shopButton.disabled = true
-shopButton.addEventListener("click", () => {
-    if (upgrades >= 0) {
-        console.log(performance.now())
-        previousTime = performance.now()
-        requestAnimationFrame(updateCount);
+
+const shopButton1 = document.createElement("button");
+shopButton1.innerHTML = "A";
+shopButton1.disabled = true;
+
+shopButton1.addEventListener("click", () => {
+  if (upgrades1 >= 0) {
+    previousTime = performance.now();
+    requestAnimationFrame(updateCount);
+  }
+  counter -= 10;
+  upgrades1 += 1;
+  newDiv.innerHTML = `${Math.round(counter)} smirks 😼`;
+  newDiv2.innerHTML = `Number of A: ${upgrades1}`;
+});
+
+
+const shopButton2 = document.createElement("button")
+shopButton2.innerHTML = "B";
+shopButton2.disabled = true;
+shopButton2.addEventListener("click", () => {
+    if (upgrades2 >= 0) {
+      previousTime = performance.now();
+      requestAnimationFrame(updateCount);
     }
-    counter -= 10
-    upgrades += 1
+    counter -= 100;
+    upgrades2 += 1;
     newDiv.innerHTML = `${Math.round(counter)} smirks 😼`;
-    newDiv2.innerHTML = `${upgrades} upgrades 😼`;
-})
+    newDiv3.innerHTML = `Number of B: ${upgrades2}`;
+  });
+const shopButton3 = document.createElement("button");
+shopButton3.innerHTML = "C";
+shopButton3.disabled = true;
+shopButton3.addEventListener("click", () => {
+    if (upgrades3 >= 0) {
+      previousTime = performance.now();
+      requestAnimationFrame(updateCount);
+    }
+    counter -= 1000;
+    upgrades3 += 1;
+    newDiv.innerHTML = `${Math.round(counter)} smirks 😼`;
+    newDiv4.innerHTML = `Number of C: ${upgrades3}`;
+  });
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 app.append(button);
-app.append(shopButton);
+app.append(shopButton1);
+app.append(shopButton2);
+app.append(shopButton3);
+app.append(gr);
 app.append(newDiv);
-app.append(newDiv2)
+app.append(newDiv2);
+app.append(newDiv3);
+app.append(newDiv4);
