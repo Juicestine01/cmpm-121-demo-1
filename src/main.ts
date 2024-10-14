@@ -6,19 +6,22 @@ const gameName = "Justin Xu's Game";
 document.title = gameName;
 
 interface Item {
-    name: string,
-    cost: number,
-    rate: number
-};
+  name: string;
+  cost: number;
+  rate: number;
+  description: string;
+}
 
 const availableItems: Item[] = [
-    {name: "Normal Smile 😊", cost: 10, rate: 0.1},
-    {name: "Cat Smile 😸", cost: 100, rate: 2},
-    {name: "Cat Face 🐱", cost: 1000, rate: 50}
+  { name: "Cat Face 🐱", cost: 10, rate: 0.1, description: "You first begin to feed the cat"},
+  { name: "Cat Smile 😸", cost: 100, rate: 2, description: "As you feed the cat more fish it's expression improves"},
+  { name: "Cat Smirk😼", cost: 1000, rate: 50, description: "The cat begins to look at you funny" },
+  { name: "Orange Cat 🐈", cost: 5000, rate: 100, description: "You notice that more cats are beginning to surround you" },
+  { name: "Black Cat 🐈‍⬛", cost: 10000, rate: 250, description: "The mystical Black Cat appears"}
 ];
 
 const button = document.createElement("button");
-button.innerHTML = "😼";
+button.innerHTML = "🐟";
 
 let counter: number = 0;
 const newDiv = document.createElement("div");
@@ -26,16 +29,16 @@ const gr = document.createElement("div");
 
 button.addEventListener("click", () => {
   counter += 1;
-  newDiv.innerHTML = `${Math.round(counter)} cat smirks 😼`;
+  newDiv.innerHTML = `${Math.round(counter)} Fish 🐟`;
   updateShopButtons();
 });
 
-newDiv.innerHTML = `${counter} cat smirks 😼`;
+newDiv.innerHTML = `${counter} Fishies 🐟`;
 
 let previousTime: number = 0;
 let flag = false;
 
-let upgrades = new Array(availableItems.length).fill(0);
+const upgrades = new Array(availableItems.length).fill(0);
 
 function updateCount() {
   const currentTime = performance.now();
@@ -45,7 +48,7 @@ function updateCount() {
   });
   const growthRate = availableItems.reduce(
     (total, item, index) => total + upgrades[index] * item.rate,
-    0
+    0,
   );
   gr.innerHTML = `Growth Rate: ${Math.round(growthRate * 10) / 10}`;
   newDiv.innerHTML = `${Math.round(counter)} cat smirks 😼`;
@@ -56,7 +59,9 @@ function updateCount() {
 
 function updateShopButtons() {
   availableItems.forEach((item, index) => {
-    const shopButton = document.getElementById(`shopButton-${index}`) as HTMLButtonElement;
+    const shopButton = document.getElementById(
+      `shopButton-${index}`,
+    ) as HTMLButtonElement;
     shopButton.disabled = Math.round(counter) < item.cost;
   });
 }
@@ -68,7 +73,6 @@ app.append(button);
 app.append(gr);
 app.append(newDiv);
 
-// Create shop buttons using a loop
 availableItems.forEach((item, index) => {
   const shopButton = document.createElement("button");
   shopButton.innerHTML = `${item.name}: ${item.cost}`;
@@ -92,9 +96,14 @@ availableItems.forEach((item, index) => {
     shopButton.innerHTML = `${item.name}: ${item.cost}`;
   });
 
+  const descriptionDiv = document.createElement("div");
+  descriptionDiv.innerHTML = `${item.description}`;
+  descriptionDiv.style.fontStyle = "italic";
+
   const upgradeDiv = document.createElement("div");
   upgradeDiv.id = `upgradeDiv-${index}`;
   upgradeDiv.innerHTML = `Number of ${item.name}: ${upgrades[index]}`;
   app.append(shopButton);
+  app.append(descriptionDiv)
   app.append(upgradeDiv);
 });
