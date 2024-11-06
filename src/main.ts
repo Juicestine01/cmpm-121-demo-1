@@ -46,7 +46,7 @@ const availableItems: Item[] = [
 ];
 
 const button = document.createElement("button");
-button.innerHTML = "🐟";
+button.innerHTML = `<span class="button huge">🐟</span>`;
 
 let counter: number = 0;
 const counterDiv = document.createElement("div");
@@ -65,7 +65,6 @@ let flag = false;
 
 const upgrades = new Array(availableItems.length).fill(0);
 
-
 function calculateIncrementalCounterIncrease(increment: number) {
   availableItems.forEach((item, index) => {
     counter += increment * upgrades[index] * item.rate;
@@ -75,7 +74,7 @@ function calculateIncrementalCounterIncrease(increment: number) {
 function updateGrowthRateDisplay() {
   const growthRate = availableItems.reduce(
     (total, item, index) => total + upgrades[index] * item.rate,
-    0
+    0,
   );
   growthRateDiv.innerHTML = `Growth Rate: ${Math.round(growthRate * 10) / 10}`;
 }
@@ -97,7 +96,6 @@ function updateCount() {
   requestAnimationFrame(updateCount);
 }
 
-
 function updateShopButtons() {
   availableItems.forEach((item, index) => {
     const shopButton = document.getElementById(
@@ -114,7 +112,7 @@ app.append(button);
 app.append(growthRateDiv);
 app.append(counterDiv);
 
-const growthRateMultiplier = 1.15
+const growthRateMultiplier = 1.15;
 
 function createShopButton(item: Item, index: number): HTMLButtonElement {
   const shopButton = document.createElement("button");
@@ -122,12 +120,18 @@ function createShopButton(item: Item, index: number): HTMLButtonElement {
   shopButton.id = `shopButton-${index}`;
   shopButton.disabled = true;
 
-  shopButton.addEventListener("click", () => handleShopButtonClick(item, index, shopButton));
+  shopButton.addEventListener("click", () =>
+    handleShopButtonClick(item, index, shopButton),
+  );
 
   return shopButton;
 }
 
-function handleShopButtonClick(item: Item, index: number, shopButton: HTMLButtonElement) {
+function handleShopButtonClick(
+  item: Item,
+  index: number,
+  shopButton: HTMLButtonElement,
+) {
   if (!flag) {
     previousTime = performance.now();
     flag = true;
@@ -170,4 +174,3 @@ function initializeShopItems() {
 }
 
 initializeShopItems();
-
